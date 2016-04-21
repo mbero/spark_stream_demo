@@ -6,7 +6,19 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Spark - Simple Application Example</name>
 	<description>Spark - Simple Application Example	</description>
-
+	<repositories>
+		<repository>
+			<id>twitter4j.org</id>
+			<name>twitter4j.org Repository</name>
+			<url>http://twitter4j.org/maven2</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>com.sparkjava</groupId>
@@ -18,9 +30,17 @@
 			<artifactId>spark-streaming_2.10</artifactId>
 			<version>1.6.1</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.twitter4j</groupId>
+			<artifactId>twitter4j-core</artifactId>
+			<version>[4.0,)</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-streaming-twitter_2.10</artifactId>
+			<version>1.6.1</version>
+		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>

@@ -53,28 +53,32 @@ public final class JavaQueueStream {
 
 		// Create and push some RDDs into the queue
 		List<Integer> list = Lists.newArrayList();
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 1000; i++) 
+		{
 			list.add(i);
 		}
 
-		for (int i = 0; i < 30; i++) {
-			rddQueue.add(ssc.sparkContext().parallelize(list));
+		for (int i = 0; i < 30; i++) 
+		{
+			JavaRDD<Integer> parallelizedList = ssc.sparkContext().parallelize(list);
+			rddQueue.add(parallelizedList);
 		}
-
 		// Create the QueueInputDStream and use it do some processing
 		JavaDStream<Integer> inputStream = ssc.queueStream(rddQueue);
-		JavaPairDStream<Integer, Integer> mappedStream = inputStream
-				.mapToPair(new PairFunction<Integer, Integer, Integer>() {
-					public Tuple2<Integer, Integer> call(Integer i) {
+		JavaPairDStream<Integer, Integer> mappedStream = inputStream.mapToPair(new PairFunction<Integer, Integer, Integer>() 
+		{
+					public Tuple2<Integer, Integer> call(Integer i)
+					{
 						return new Tuple2<>(i % 10, 1);
 					}
-				});
-		JavaPairDStream<Integer, Integer> reducedStream = mappedStream
-				.reduceByKey(new Function2<Integer, Integer, Integer>() {
-					public Integer call(Integer i1, Integer i2) {
+		});
+		JavaPairDStream<Integer, Integer> reducedStream = mappedStream.reduceByKey(new Function2<Integer, Integer, Integer>()
+		{
+					public Integer call(Integer i1, Integer i2) 
+					{
 						return i1 + i2;
 					}
-				});
+		});
 
 		reducedStream.print();
 		ssc.start();
